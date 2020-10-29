@@ -9,6 +9,7 @@ const commands = require("./commands");
 const helpCommand = require("./commands/help");
 
 let bot = require("./bot");
+const generateReport = require("./commands/report");
 
 let app = express();
 
