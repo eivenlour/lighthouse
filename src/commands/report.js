@@ -5,7 +5,6 @@ const lighthouse = require('lighthouse');
 const chromeLauncher = require('chrome-launcher');
 const { v1: uuidv1 } = require('uuid');
 const config = require('../config');
-// const { categories, deviceForms } = require('../constants');
 
 const s3 = new aws.S3({
   accessKeyId: config('AWS_ACCESS_KEY_ID'),
@@ -55,14 +54,5 @@ const generateReport = async (url, categoryList, deviceForm) => {
 
   await chrome.kill();
 };
-
-/** 
-// Sample usage:
-generateReport(
-  'https://example.com',
-  [categories.PERFORMANCE],
-  deviceForms.MOBILE
-);
-**/
 
 module.exports = generateReport;
