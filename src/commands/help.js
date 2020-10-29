@@ -9,19 +9,53 @@ const msgDefaults = {
   icon_emoji: config("ICON_EMOJI"),
 };
 
-let attachments = [
+/* BUTTON ACTIONS - FULL OR CUSTOM REPORT */
+let blocks = [
   {
-    title: "Starbot will help you find the hippest repos on GitHub",
-    color: "#2FA44F",
-    text:
-      "`/starbot repos` returns hip repos \n`/starbot javascript` returns hip JavaScript repos",
-    mrkdwn_in: ["text"],
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text:
+        "Hey there 👋 I'm Lighthouse. \n\nI'm here to help you identify and fix common problems that affect your site's performance, accessibility, and user experience. Learn more about me <https://developers.google.com/web/tools/lighthouse/?utm_source=devtools|here>.\n\n",
+    },
+    accessory: {
+      type: "image",
+      image_url:
+        "https://www.leankoala.com/media/249/download/lighthouse.png?v=1",
+      alt_text: "lighthouse logo",
+    },
   },
   {
-    title: "Configuring Starbot",
-    color: "#E3E4E6",
-    text: "`/starbot help` ... you're lookin at it! \n",
-    mrkdwn_in: ["text"],
+    type: "divider",
+  },
+  {
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text:
+        "*What would you like to do?*\n You can choose to run the full report, or select the specific audits you'd like to run. Information on all the audits can be found <https://web.dev/learn/#lighthouse|here>. ",
+    },
+  },
+  {
+    type: "actions",
+    elements: [
+      {
+        type: "button",
+        text: {
+          type: "plain_text",
+          text: "Run full report",
+        },
+        value: "full_report",
+      },
+      {
+        type: "button",
+        text: {
+          type: "plain_text",
+          text: "Customize report",
+        },
+        value: "custom_report",
+      },
+    ],
   },
 ];
 
@@ -29,7 +63,7 @@ const handler = (payload, res) => {
   let msg = _.defaults(
     {
       channel: payload.channel_name,
-      attachments: attachments,
+      blocks,
     },
     msgDefaults
   );

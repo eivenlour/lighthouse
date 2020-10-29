@@ -1,6 +1,6 @@
 {
-  "name": "🌟 Starbot",
-  "description": "Starbot is GitHub's trending open-source page, reincarnated as a Slack bot",
+  "name": "💡 Lighthouse",
+  "description": "A Lighthouse Slack integration.",
   "repository": "https://github.com/lighthouse-slack/lighthouse.git",
   "logo": "https://img.speedcurve.com/blog/lighthouse-1024x1024.png?auto=format,compress&fit=max&w=2000",
   "success_url": "/",
@@ -9,7 +9,7 @@
       "required": true
     },
     "LIGHTHOUSE_COMMAND_TOKEN": {
-      "description": "Slash command token, for the starbot command endpoint",
+      "description": "Slash command token, for the lighthouse command endpoint",
       "required": true
     },
     "SLACK_TOKEN": {

@@ -9,10 +9,19 @@ const commands = require("./commands");
 const helpCommand = require("./commands/help");
 
 let bot = require("./bot");
-const generateReport = require("./commands/report");
-
 let app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+/* COMMAND: `/lighthouse` */
+app.post("/commands/lighthouse", (req, res) => {
+  let payload = req.body;
+  let cmd = helpCommand;
+  cmd.handler(payload, res);
+});
+
+/* LOCAL DEVELOPMENT */
 if (config("PROXY_URI")) {
   app.use(
     proxy(config("PROXY_URI"), {
@@ -23,43 +32,17 @@ if (config("PROXY_URI")) {
   );
 }
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
 app.get("/", (req, res) => {
-  res.send("\n 👋 🌍 \n");
-});
-
-app.post("/commands/lighthouse", (req, res) => {
-  let payload = req.body;
-
-  if (!payload || payload.token !== config("LIGHTHOUSE_COMMAND_TOKEN")) {
-    let err =
-      "✋  Star—what? An invalid slash token was provided\n" +
-      "   Is your Slack slash token correctly configured?";
-    console.log(err);
-    res.status(401).end(err);
-    return;
-  }
-
-  let cmd = _.reduce(
-    commands,
-    (a, cmd) => {
-      return payload.text.match(cmd.pattern) ? cmd : a;
-    },
-    helpCommand
-  );
-
-  cmd.handler(payload, res);
+  res.send("\n 💡Lighthouse💡 \n");
 });
 
 app.listen(config("PORT"), (err) => {
   if (err) throw err;
 
-  console.log(`\n🚀  Starbot LIVES on PORT ${config("PORT")} 🚀`);
+  console.log(`\n🚀  Lighthouse LIVES on PORT ${config("PORT")} 🚀`);
 
   if (config("SLACK_TOKEN")) {
-    console.log(`🤖  beep boop: @starbot is real-time\n`);
+    console.log(`🤖  beep boop: @lighthouse is real-time\n`);
     bot.listen({ token: config("SLACK_TOKEN") });
   }
 });
