@@ -10,8 +10,7 @@ const categories = {
 
 const deviceForms = {
   DESKTOP: 'desktop',
-  MOBILE: 'mobile',
-  NONE: 'none'
+  MOBILE: 'mobile'
 }
 
 module.exports = { 

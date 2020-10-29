@@ -5,6 +5,8 @@ const lighthouse = require('lighthouse');
 const chromeLauncher = require('chrome-launcher');
 const { v1: uuidv1 } = require('uuid');
 const config = require('../config');
+const { deviceForms } = require('../constants');
+const validateURL = require('../helpers/url-validator');
 
 const s3 = new aws.S3({
   accessKeyId: config('AWS_ACCESS_KEY_ID'),
@@ -37,7 +39,13 @@ const uploadFile = file => {
 
 };
 
-const generateReport = async (url, categoryList, deviceForm) => {
+const generateCustomizedReport = async (url, categoryList, deviceForm) => {
+
+  if (!(validateURL(url))) {
+    console.log('The URL you entered is invalid. Please try again.')
+    return;
+  }
+
   const chrome = await chromeLauncher.launch({
     chromeFlags: ['--headless']
   });
@@ -55,4 +63,8 @@ const generateReport = async (url, categoryList, deviceForm) => {
   await chrome.kill();
 };
 
-module.exports = generateReport;
+const generateFullReport = async (url) => {
+  await generateCustomizedReport(url, null, deviceForms.MOBILE);
+};
+
+module.exports = { generateFullReport, generateCustomizedReport };
