@@ -1,6 +1,7 @@
 'use strict'
 
 const { URL, parse } = require('url');
+const TinyURL = require('tinyurl');
 
 const validateURL = (url) => {
   const protocols = ['http', 'https'];
@@ -17,4 +18,15 @@ const validateURL = (url) => {
   }
 };
 
-module.exports = validateURL;
+const shortenURL = async (url) => {
+  let shortURL;
+  try {
+    shortURL = await TinyURL.shorten(url);
+    return shortURL;
+  } catch (err) {
+    console.log("Something went wrong. Try again later.")
+    return;
+  }
+};
+
+module.exports = { validateURL, shortenURL };
