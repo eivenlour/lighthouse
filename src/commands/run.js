@@ -4,6 +4,7 @@ const _ = require("lodash");
 const config = require("../config");
 const { generateFullReport } = require("../tasks/generate-report");
 const axios = require('axios');
+const { WebClient } = require('@slack/web-api');
 
 const msgDefaults = {
   response_type: "in_channel",
@@ -42,7 +43,7 @@ const handler = async (payload, res) => {
   
   if (payload) {
     const url = payload.text.split(' ')[1];  
-    
+
     let loading = _.defaults(
       {
         channel: payload.channel_name,
@@ -54,7 +55,9 @@ const handler = async (payload, res) => {
     res.status(200).json(loading);
   } 
 
-  //const url = payload.text.split(' ')[1];  
+  const token = process.env.OAUTH_TOKEN;
+  const web = new WebClient(token);
+
   let msg = _.defaults(
     {
       channel: payload.channel_name,
@@ -62,6 +65,11 @@ const handler = async (payload, res) => {
     },
     msgDefaults
   );
+
+  await web.chat.postMessage(msg);
+  /*
+  //const url = payload.text.split(' ')[1];  
+ 
 
   await axios.post(
     payload.response_url,
@@ -71,6 +79,7 @@ const handler = async (payload, res) => {
       }
     }
   );
+  */
 
   return;
 };

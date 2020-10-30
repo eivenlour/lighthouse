@@ -16,6 +16,7 @@ const config = {
   S3_BUCKET: process.env.S3_BUCKET,
   REGION: process.env.REGION,
   SLACK_TOKEN: process.env.SLACK_TOKEN,
+  OAUTH_TOKEN: process.env.OAUTH_TOKEN,
   ICON_EMOJI: ":bulb:",
 };
 

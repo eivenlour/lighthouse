@@ -16,6 +16,7 @@
     "url": "https://github.com/lighthouse-slack"
   },
   "dependencies": {
+    "@slack/web-api": "^5.13.0",
     "aws-sdk": "2.x",
     "axios": "^0.21.0",
     "body-parser": "^1.15.0",
