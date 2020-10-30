@@ -22,6 +22,19 @@ const loadingMessage = [
   }
 ];
 
+const sendLoadingMessage = async (payload, res) => {
+  if (payload) {
+    let loading = _.defaults(
+      {
+        channel: payload.channel_name,
+        blocks:  loadingMessage
+      },
+      msgDefaults
+    );
+    await res.set('content-type', 'application/json');
+    await res.status(200).json(loading);
+  } 
+};
 
 /* GENERATED REPORT MESSAGE */
 const getReportMessage = async (url) => {
@@ -40,31 +53,23 @@ const getReportMessage = async (url) => {
 
 const handler = async (payload, res) => {
   
-  if (payload) {
-    let loading = _.defaults(
+  sendLoadingMessage(payload, res).then( async () => {
+    const token = process.env.OAUTH_TOKEN;
+    const web = new WebClient(token);
+    const url = payload.text.split(' ')[1];  
+  
+    let msg = _.defaults(
       {
         channel: payload.channel_name,
-        blocks:  loadingMessage
+        blocks: await getReportMessage(url)
       },
       msgDefaults
     );
-    res.set('content-type', 'application/json');
-    res.status(200).json(loading);
-  } 
+  
+    await web.chat.postMessage(msg);
+  });
+  
 
-  const token = process.env.OAUTH_TOKEN;
-  const web = new WebClient(token);
-  const url = payload.text.split(' ')[1];  
-
-  let msg = _.defaults(
-    {
-      channel: payload.channel_name,
-      blocks: await getReportMessage(url)
-    },
-    msgDefaults
-  );
-
-  await web.chat.postMessage(msg);
 
   return;
 };

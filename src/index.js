@@ -33,7 +33,6 @@ app.post("/commands/lighthouse", async (req, res) => {
     return a;
   }, helpCommand);
 
-  console.log(cmd);
   await cmd.handler(payload, res);
 });
 
