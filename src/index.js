@@ -20,11 +20,14 @@ app.post("/commands/lighthouse", async (req, res) => {
   //let cmd = helpCommand;
   //cmd.handler(payload, res);
 
+  payload = {
+    text: 'run https://example.com',
+    channel_name: 'lighthouse-testing'
+  }
   let cmd = _.reduce(commands, (a, cmd) => {
-    console.log(cmd.pattern);
-   if (payload.text && payload.text.match(cmd.pattern)) {
-     return cmd;
-   }
+    if (payload.text && payload.text.match(cmd.pattern)) {
+      return cmd;
+    }
     return a;
   }, helpCommand);
 
