@@ -13,61 +13,61 @@ const msgDefaults = {
 
 /* LOADING MESSAGE */
 const loadingMessage = [
-	{
-		type: "section",
-		text: {
-			type: "mrkdwn",
-			text: `Running report...`,
-		},
-	}
+  {
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text: `Running report...`,
+    },
+  }
 ];
 
 
 /* GENERATED REPORT MESSAGE */
 const getReportMessage = async (url) => {
-	const reportURL = await generateFullReport(url);
-	let block = [
-		{
-			type: "section",
-			text: {
-				type: "mrkdwn",
-				text: `Report link: ${reportURL}`,
-			}
-		}
-	];
-	return block;
+  const reportURL = await generateFullReport(url);
+  let block = [
+    {
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `Report link: ${reportURL}`,
+      }
+    }
+  ];
+  return block;
 };
 
 const handler = async (payload, res) => {
-	if (payload) {
-		let loading = _.defaults(
-			{
-				channel: payload.channel_name,
-				blocks: loadingMessage
-			},
-			msgDefaults
-		);
-		res.status(200).json(loading);
-	}
-	/*
-	const url = payload.text.split(' ')[1];
+  if (payload) {
+    let loading = _.defaults(
+      {
+        channel: payload.channel_name,
+        blocks: loadingMessage
+      },
+      msgDefaults
+    );
+    res.set('content-type', 'application/json');
+    res.status(200).json(loading);
+  }
+
+  const url = payload.text.split(' ')[1];
   let msg = _.defaults(
     {
       channel: payload.channel_name,
       blocks: await getReportMessage(url),
     },
     msgDefaults
-	);
+  );
 
-	await axios.post(
-		payload.response_url,
-		msg, {
-			headers: {
-				'content-type': 'application/json'
-			}
-		}
-	);
-	*/
+  await axios.post(
+    payload.response_url,
+    msg, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    }
+  );
 
   return;
 };

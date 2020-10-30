@@ -17,11 +17,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /* COMMAND: `/lighthouse` */
 app.post("/commands/lighthouse", async (req, res) => {
   let payload = req.body;
-
+  
   /*
   payload = {
     text: 'run https://example.com',
-    channel_name: 'lighthouse-testing'
+    channel_name: 'lighthouse-testing',
+    response_url: ''
   }
   */
  
