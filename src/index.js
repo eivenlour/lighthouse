@@ -21,7 +21,10 @@ app.post("/commands/lighthouse", (req, res) => {
   //cmd.handler(payload, res);
 
   let cmd = _.reduce(commands, (a, cmd) => {
-    return payload.text.match(cmd.pattern) ? cmd : a
+   if (payload.text && payload.text.match(cmd.pattern)) {
+     return cmd;
+   }
+    return a;
   }, helpCommand);
 
   cmd.handler(payload, res);
