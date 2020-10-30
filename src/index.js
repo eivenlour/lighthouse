@@ -15,19 +15,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /* COMMAND: `/lighthouse` */
-app.post("/commands/lighthouse", (req, res) => {
+app.post("/commands/lighthouse", async (req, res) => {
   let payload = req.body;
   //let cmd = helpCommand;
   //cmd.handler(payload, res);
 
   let cmd = _.reduce(commands, (a, cmd) => {
+    console.log(cmd.pattern);
    if (payload.text && payload.text.match(cmd.pattern)) {
      return cmd;
    }
     return a;
   }, helpCommand);
 
-  cmd.handler(payload, res);
+  console.log(cmd);
+  await cmd.handler(payload, res);
 });
 
 /* LOCAL DEVELOPMENT */
