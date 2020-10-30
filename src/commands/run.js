@@ -39,6 +39,7 @@ const getReportMessage = async (url) => {
 };
 
 const handler = async (payload, res) => {
+  /*
   if (payload) {
     let loading = _.defaults(
       {
@@ -49,13 +50,13 @@ const handler = async (payload, res) => {
     );
     res.set('content-type', 'application/json');
     res.status(200).json(loading);
-  }
+  } */
 
   const url = payload.text.split(' ')[1];
   let msg = _.defaults(
     {
       channel: payload.channel_name,
-      blocks: await getReportMessage(url),
+      blocks: loadingMessage
     },
     msgDefaults
   );
