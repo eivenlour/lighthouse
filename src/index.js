@@ -17,9 +17,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /* COMMAND: `/lighthouse` */
 app.post("/commands/lighthouse", (req, res) => {
   let payload = req.body;
-  let cmd = helpCommand;
+  //let cmd = helpCommand;
+  //cmd.handler(payload, res);
+
+  let cmd = _.reduce(commands, (a, cmd) => {
+    return payload.text.match(cmd.pattern) ? cmd : a
+  }, helpCommand);
+
   cmd.handler(payload, res);
-  console.log(payload);
 });
 
 /* LOCAL DEVELOPMENT */
