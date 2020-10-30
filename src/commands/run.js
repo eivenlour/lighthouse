@@ -25,13 +25,13 @@ const loadingMessage = [
 
 /* GENERATED REPORT MESSAGE */
 const getReportMessage = async (url) => {
-  const reportURL = await generateFullReport(url);
+  //const reportURL = await generateFullReport(url);
   let block = [
     {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `Report link: ${reportURL}`,
+        text: `Report link: ${url}`,
       }
     }
   ];
@@ -39,24 +39,27 @@ const getReportMessage = async (url) => {
 };
 
 const handler = async (payload, res) => {
-  /*
+  
   if (payload) {
+    const url = payload.text.split(' ')[1];  
+
+
     let loading = _.defaults(
       {
         channel: payload.channel_name,
-        blocks: loadingMessage
+        blocks:  await getReportMessage(url)
       },
       msgDefaults
     );
     res.set('content-type', 'application/json');
     res.status(200).json(loading);
-  } */
-
-  const url = payload.text.split(' ')[1];
+  } 
+/*
+  const url = payload.text.split(' ')[1];  
   let msg = _.defaults(
     {
       channel: payload.channel_name,
-      blocks: loadingMessage
+      blocks: await getReportMessage(url)
     },
     msgDefaults
   );
@@ -69,7 +72,7 @@ const handler = async (payload, res) => {
       }
     }
   );
-
+*/
   return;
 };
 
