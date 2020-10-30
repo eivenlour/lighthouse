@@ -42,8 +42,7 @@ const handler = async (payload, res) => {
   
   if (payload) {
     const url = payload.text.split(' ')[1];  
-
-
+    
     let loading = _.defaults(
       {
         channel: payload.channel_name,
@@ -54,25 +53,25 @@ const handler = async (payload, res) => {
     res.set('content-type', 'application/json');
     res.status(200).json(loading);
   } 
-/*
-  const url = payload.text.split(' ')[1];  
+
+  //const url = payload.text.split(' ')[1];  
   let msg = _.defaults(
     {
       channel: payload.channel_name,
-      blocks: await getReportMessage(url)
+      blocks: loadingMessage
     },
     msgDefaults
   );
 
   await axios.post(
     payload.response_url,
-    msg, {
+    JSON.stringify(msg), {
       headers: {
-        'content-type': 'application/json'
+        'Content-Type': 'application/json'
       }
     }
   );
-*/
+
   return;
 };
 
