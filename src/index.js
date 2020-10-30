@@ -25,7 +25,7 @@ app.post("/commands/lighthouse", async (req, res) => {
     response_url: ''
   }
   */
- 
+  
   let cmd = _.reduce(commands, (a, cmd) => {
     if (payload.text && payload.text.match(cmd.pattern)) {
       return cmd;

@@ -3,7 +3,6 @@
 const _ = require("lodash");
 const config = require("../config");
 const { generateFullReport } = require("../tasks/generate-report");
-const axios = require('axios');
 const { WebClient } = require('@slack/web-api');
 
 const msgDefaults = {
@@ -26,13 +25,13 @@ const loadingMessage = [
 
 /* GENERATED REPORT MESSAGE */
 const getReportMessage = async (url) => {
-  //const reportURL = await generateFullReport(url);
+  const reportURL = await generateFullReport(url);
   let block = [
     {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `Report link: ${url}`,
+        text: `Report link: ${reportURL}`,
       }
     }
   ];
@@ -42,12 +41,10 @@ const getReportMessage = async (url) => {
 const handler = async (payload, res) => {
   
   if (payload) {
-    const url = payload.text.split(' ')[1];  
-
     let loading = _.defaults(
       {
         channel: payload.channel_name,
-        blocks:  await getReportMessage(url)
+        blocks:  loadingMessage
       },
       msgDefaults
     );
@@ -57,29 +54,17 @@ const handler = async (payload, res) => {
 
   const token = process.env.OAUTH_TOKEN;
   const web = new WebClient(token);
+  const url = payload.text.split(' ')[1];  
 
   let msg = _.defaults(
     {
       channel: payload.channel_name,
-      blocks: loadingMessage
+      blocks: await getReportMessage(url)
     },
     msgDefaults
   );
 
   await web.chat.postMessage(msg);
-  /*
-  //const url = payload.text.split(' ')[1];  
- 
-
-  await axios.post(
-    payload.response_url,
-    JSON.stringify(msg), {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  );
-  */
 
   return;
 };
