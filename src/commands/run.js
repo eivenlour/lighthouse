@@ -19,7 +19,6 @@ const loadingMessage = [
 			type: "mrkdwn",
 			text: `Running report...`,
 		},
-		replace_original: true
 	}
 ];
 
