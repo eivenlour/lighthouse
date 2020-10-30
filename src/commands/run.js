@@ -49,7 +49,7 @@ const handler = async (payload, res) => {
 		);
 		res.status(200).json(loading);
 	}
-
+	/*
 	const url = payload.text.split(' ')[1];
   let msg = _.defaults(
     {
@@ -67,6 +67,7 @@ const handler = async (payload, res) => {
 			}
 		}
 	);
+	*/
 
   return;
 };
