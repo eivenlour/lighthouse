@@ -3,7 +3,7 @@
 const _ = require("lodash");
 const config = require("../config");
 const { generateFullReport } = require("../tasks/generate-report");
-const http = require('http');
+const axios = require('axios');
 
 const msgDefaults = {
   response_type: "in_channel",
@@ -58,23 +58,16 @@ const handler = async (payload, res) => {
     },
     msgDefaults
 	);
-	
-	const post_options = {
-		url: payload.response_url,
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
+
+	await axios.post(
+		payload.response_url,
+		msg, {
+			headers: {
+				'content-type': 'application/json'
+			}
 		}
-	}
+	);
 
-	var post_req = http.request(post_options, function(res) {
-		res.setEncoding('utf8');
-		res.on('data', function (chunk) {
-				console.log('Response: ' + chunk);
-				});
-		});
-
-	post_req.write(msg);
   return;
 };
 

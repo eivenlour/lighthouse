@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "aws-sdk": "2.x",
+    "axios": "^0.21.0",
     "body-parser": "^1.15.0",
     "botkit": "0.0.7",
     "chrome-launcher": "^0.13.4",

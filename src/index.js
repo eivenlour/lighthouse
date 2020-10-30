@@ -17,13 +17,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /* COMMAND: `/lighthouse` */
 app.post("/commands/lighthouse", async (req, res) => {
   let payload = req.body;
-  //let cmd = helpCommand;
-  //cmd.handler(payload, res);
 
+  /*
   payload = {
     text: 'run https://example.com',
     channel_name: 'lighthouse-testing'
   }
+  */
+ 
   let cmd = _.reduce(commands, (a, cmd) => {
     if (payload.text && payload.text.match(cmd.pattern)) {
       return cmd;
