@@ -19,6 +19,7 @@ app.post("/commands/lighthouse", (req, res) => {
   let payload = req.body;
   let cmd = helpCommand;
   cmd.handler(payload, res);
+  console.log(payload);
 });
 
 /* LOCAL DEVELOPMENT */
